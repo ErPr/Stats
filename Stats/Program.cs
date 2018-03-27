@@ -15,13 +15,7 @@ namespace Stats
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);
 
             var fileName = Path.Combine(directory.FullName, "SoccerGameResults.csv");
-            var fileContents = ReadFile(fileName);
-            string[] fileLines = fileContents.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries );
-
-            foreach (var line in fileLines)
-            {
-                Console.WriteLine(line);
-            }
+            var fileContents = ReadSoccerResults(fileName);
 
             Console.ReadLine();
         }
@@ -39,10 +33,12 @@ namespace Stats
             var soccerResults = new List<string[]>();
             using (var reader = new StreamReader(fileName))
             {
-                while(reader.Peek() > - 1)
+                string line = "";
+
+                while ((line = reader.ReadLine()) != null)
                 {
-                    string[] line = reader.ReadLine().Split(',');
-                    soccerResults.Add(line);
+                    string[] values = line.Split(',');
+                    soccerResults.Add(values);
                 }
             }
             return soccerResults;
