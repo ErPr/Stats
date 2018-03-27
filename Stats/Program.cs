@@ -16,8 +16,12 @@ namespace Stats
 
             var fileName = Path.Combine(directory.FullName, "SoccerGameResults.csv");
             var fileContents = ReadFile(fileName);
+            string[] fileLines = fileContents.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries );
+            foreach(var line in fileLines)
+            {
+                Console.WriteLine(line);
+            }
 
-            Console.WriteLine(fileContents);
             Console.ReadLine();
         }
 
