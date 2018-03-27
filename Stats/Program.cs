@@ -14,20 +14,19 @@ namespace Stats
             string currentDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo directory = new DirectoryInfo(currentDirectory);
 
-            var files = directory.GetFiles("*.txt");
-            var fileName = Path.Combine(directory.FullName, "data.txt");
-            var file = new FileInfo(fileName);
+            var fileName = Path.Combine(directory.FullName, "SoccerGameResults.csv");
+            var fileContents = ReadFile(fileName);
 
-            if (file.Exists)
+            Console.WriteLine(fileContents);
+            Console.ReadLine();
+        }
+
+        public static string ReadFile(string fileName)
+        {
+            using (var CSVReader = new StreamReader(fileName))
             {
-                using (var reader = new StreamReader(file.FullName))
-                {
-                    Console.SetIn(reader);
-                    Console.WriteLine(Console.ReadLine());
-                }
+                return CSVReader.ReadToEnd();
             }
-
-            Console.ReadKey();
         }
     }
 }
