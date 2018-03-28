@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace Stats
 {
 
-    public class Rootobject
+    public class RootObject
     {
-        public Class1[] Property1 { get; set; }
+        public Player[] Player{ get; set; }
     }
 
-    public class Class1
+    public class Player
     {
         public int assists { get; set; }
         public int big_chances_created { get; set; }
