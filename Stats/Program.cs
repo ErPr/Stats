@@ -75,6 +75,13 @@ namespace Stats
                     {
                         gameResult.ShotsOffGoal = parseInt;
                     }
+
+                    double pocessionPercent;
+                    if (double.TryParse(values[7], out pocessionPercent))
+                    {
+                        gameResult.PocessionPercent = pocessionPercent;
+                    }
+
                     soccerResults.Add(gameResult);
                 }
             }

@@ -18,7 +18,6 @@ namespace Stats
         public int ShotsOnGoal { get; set; }
         public int ShotsOffGoal { get; set; }
         public double PocessionPercent { get; set; }
-
     }
 
     public enum HomeOrAway
