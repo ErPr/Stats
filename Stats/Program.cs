@@ -82,6 +82,9 @@ namespace Stats
                         gameResult.PocessionPercent = pocessionPercent;
                     }
 
+                    // a way to calculate and store the ConverstionRate
+                    //gameResult.ConversionRate = (double)gameResult.Goals / gameResult.GoalAttempts;
+
                     soccerResults.Add(gameResult);
                 }
             }
