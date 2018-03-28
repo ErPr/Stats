@@ -17,7 +17,7 @@ namespace Stats
         public int GoalAttempts { get; set; }
         public int ShotsOnGoal { get; set; }
         public int ShotsOffGoal { get; set; }
-        public int PocessionPercent { get; set; }
+        public double PocessionPercent { get; set; }
 
     }
 
