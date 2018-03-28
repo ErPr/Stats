@@ -39,14 +39,15 @@ namespace Stats
                 while ((line = reader.ReadLine()) != null)
                 {
                     var gameResult = new GameResult();
-
                     string[] values = line.Split(',');
                     // replaced: gameResult.GameDate = DateTime.Parse(values[0]);
                     DateTime gameDate;
+
                     if (DateTime.TryParse(values[0], out gameDate))
                     {
                         gameResult.GameDate = gameDate;
                     }
+
                     soccerResults.Add(values);
                 }
             }
