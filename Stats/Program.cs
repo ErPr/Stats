@@ -28,10 +28,10 @@ namespace Stats
 
             foreach(var player in players)
             {
-                Console.WriteLine(player.second_name);
+                Console.WriteLine(player.FirstName);
             }
 
-            Console.ReadLine();
+            //Console.ReadLine();
         }
 
         public static string ReadFile(string fileName)
