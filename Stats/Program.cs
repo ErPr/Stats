@@ -34,10 +34,19 @@ namespace Stats
             using (var reader = new StreamReader(fileName))
             {
                 string line = "";
-
+                //reader.ReadLine()'s function here is to read the first line of 'headers' before the while loop.  That they are sort of thrown away for now.'
+                reader.ReadLine();
                 while ((line = reader.ReadLine()) != null)
                 {
+                    var gameResult = new GameResult();
+
                     string[] values = line.Split(',');
+                    // replaced: gameResult.GameDate = DateTime.Parse(values[0]);
+                    DateTime gameDate;
+                    if (DateTime.TryParse(values[0], out gameDate))
+                    {
+                        gameResult.GameDate = gameDate;
+                    }
                     soccerResults.Add(values);
                 }
             }
