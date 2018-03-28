@@ -10,7 +10,7 @@ namespace Stats
     {
         public int Compare(Player x, Player y)
         {
-            return x.PointsPerGame.CompareTo(y.PointsPerGame) * -1;
+            return x.PointsPerGame.CompareTo(y.PointsPerGame) * -1; //-1 included to order sort by desc
         }
         
         //public int Compare(Player x, Player y)
