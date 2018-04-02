@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace Stats
 {
@@ -12,28 +13,32 @@ namespace Stats
     {
         static void Main(string[] args)
         {
-            string currentDirectory = Directory.GetCurrentDirectory();
-            DirectoryInfo directory = new DirectoryInfo(currentDirectory);
+            //string currentDirectory = Directory.GetCurrentDirectory();
+            //DirectoryInfo directory = new DirectoryInfo(currentDirectory);
 
-            var fileName = Path.Combine(directory.FullName, "SoccerGameResults.csv");
-            var fileContents = ReadSoccerResults(fileName);
+            //var fileName = Path.Combine(directory.FullName, "SoccerGameResults.csv");
+            //var fileContents = ReadSoccerResults(fileName);
 
-            //foreach(var game in fileContents)
+            ////foreach(var game in fileContents)
+            ////{
+            ////    Console.WriteLine(game.TeamName);
+            ////}
+
+            //fileName = Path.Combine(directory.FullName, "players.json");
+            //var players = DeserializePlayers(fileName);
+            //var topTenPlayers = GetTopTenPlayers(players);
+
+            //foreach(var player in topTenPlayers)
             //{
-            //    Console.WriteLine(game.TeamName);
+            //    Console.WriteLine("Name " + player.FirstName + " PPG: " + player.PointsPerGame);
             //}
 
-            fileName = Path.Combine(directory.FullName, "players.json");
-            var players = DeserializePlayers(fileName);
-            var topTenPlayers = GetTopTenPlayers(players);
+            //fileName = Path.Combine(directory.FullName, "topten.json");
+            //SerializePlayersToFile(topTenPlayers, fileName);
 
-            foreach(var player in topTenPlayers)
-            {
-                Console.WriteLine("Name " + player.FirstName + " PPG: " + player.PointsPerGame);
-            }
+            //Console.WriteLine(GetGoogleHomePage());
 
-            fileName = Path.Combine(directory.FullName, "topten.json");
-            SerializePlayersToFile(topTenPlayers, fileName);
+            Console.WriteLine(GetNewsForPlayer("Marco Pappa"));
         }
 
         public static string ReadFile(string fileName)
@@ -151,5 +156,31 @@ namespace Stats
                 serializer.Serialize(jsonWriter, players);
             }
         }
+
+        public static string GetGoogleHomePage()
+        {
+            var webClient = new WebClient();
+            byte[] googleHome = webClient.DownloadData("https://www.google.com");
+
+            using (var stream = new MemoryStream(googleHome))
+            using (var reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+
+        public static string GetNewsForPlayer(string playerName)
+        {
+            var webClient = new WebClient();
+            webClient.Headers.Add("Ocp-Apim-Subscription-Key", "4584b815873847faa9c79da363daac3a");
+            byte[] searchResults = webClient.DownloadData(string.Format("https://api.cognitive.microsoft.com/bing/v7.0/news/search?q={0}&mkt=en-us", playerName));
+
+            using (var stream = new MemoryStream(searchResults))
+            using (var reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+
     }
 }
