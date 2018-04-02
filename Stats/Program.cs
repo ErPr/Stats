@@ -169,17 +169,22 @@ namespace Stats
             }
         }
 
-        public static string GetNewsForPlayer(string playerName)
+        public static List<NewsResult> GetNewsForPlayer(string playerName)
         {
+            var results = new List<NewsResult>();
             var webClient = new WebClient();
             webClient.Headers.Add("Ocp-Apim-Subscription-Key", "4584b815873847faa9c79da363daac3a");
             byte[] searchResults = webClient.DownloadData(string.Format("https://api.cognitive.microsoft.com/bing/v7.0/news/search?q={0}&mkt=en-us", playerName));
 
+            var serializer = new JsonSerializer();
+
             using (var stream = new MemoryStream(searchResults))
             using (var reader = new StreamReader(stream))
+            using (var jsonReader = new JsonTextReader(reader))
             {
-                return reader.ReadToEnd();
+                results = serializer.Deserialize<NewsSearch>(jsonReader).NewsResults;
             }
+            return results;
         }
 
     }
