@@ -13,22 +13,22 @@ namespace Stats
     {
         static void Main(string[] args)
         {
-            //string currentDirectory = Directory.GetCurrentDirectory();
-            //DirectoryInfo directory = new DirectoryInfo(currentDirectory);
+            string currentDirectory = Directory.GetCurrentDirectory();
+            DirectoryInfo directory = new DirectoryInfo(currentDirectory);
 
-            //var fileName = Path.Combine(directory.FullName, "SoccerGameResults.csv");
-            //var fileContents = ReadSoccerResults(fileName);
+            var fileName = Path.Combine(directory.FullName, "SoccerGameResults.csv");
+            var fileContents = ReadSoccerResults(fileName);
 
-            ////foreach(var game in fileContents)
-            ////{
-            ////    Console.WriteLine(game.TeamName);
-            ////}
+            //foreach(var game in fileContents)
+            //{
+            //    Console.WriteLine(game.TeamName);
+            //}
 
-            //fileName = Path.Combine(directory.FullName, "players.json");
-            //var players = DeserializePlayers(fileName);
-            //var topTenPlayers = GetTopTenPlayers(players);
+            fileName = Path.Combine(directory.FullName, "players.json");
+            var players = DeserializePlayers(fileName);
+            var topTenPlayers = GetTopTenPlayers(players);
 
-            //foreach(var player in topTenPlayers)
+            //foreach (var player in topTenPlayers)
             //{
             //    Console.WriteLine("Name " + player.FirstName + " PPG: " + player.PointsPerGame);
             //}
@@ -36,9 +36,20 @@ namespace Stats
             //fileName = Path.Combine(directory.FullName, "topten.json");
             //SerializePlayersToFile(topTenPlayers, fileName);
 
-            //Console.WriteLine(GetGoogleHomePage());
+            foreach (var player in topTenPlayers)
+            {
+                List<NewsResult> newsResults = GetNewsForPlayer(string.Format("{0} {1}", player.FirstName, player.SecondName));
+                foreach(var result in newsResults)
+                {
+                    Console.WriteLine(string.Format("Date: {0:f}, HeadLine: {1}, Summary: {2} \r\n", result.DatePublished, result.Headline, result.Summary));
+                    Console.ReadKey();
+                }
+            }
 
-            Console.WriteLine(GetNewsForPlayer("Marco Pappa"));
+            fileName = Path.Combine(directory.FullName, "topten.json");
+            SerializePlayersToFile(topTenPlayers, fileName);
+
+
         }
 
         public static string ReadFile(string fileName)

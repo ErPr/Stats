@@ -13,7 +13,6 @@ namespace Stats
         // public Value[] value{ get; set; }
         [JsonProperty(PropertyName = "value")]
         public List<NewsResult> NewsResults { get; set; }
-         
     }
 
     // public class Value
