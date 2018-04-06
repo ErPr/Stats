@@ -198,5 +198,31 @@ namespace Stats
             return results;
         }
 
+        public static SentimentResponse GetSentimentResponse(List<NewsResult> newsResults)
+        {
+            var sentimentResponse = new SentimentResponse();
+            var sentimentRequest = new SentimentRequest();
+            sentimentRequest.Documents = new List<Document>();
+
+            foreach(var result in newsResults)
+            {
+                sentimentRequest.Documents.Add(new Document{ Id= result.Headline, Text = result.Summary});
+            }
+
+            var webClient = new WebClient();
+            webClient.Headers.Add("Ocp-Apim-Subscription-Key", "e425f740634f4e9698180c0f0bd4d2b0");
+            webClient.Headers.Add(HttpRequestHeader.Accept, "application/json");
+            webClient.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+
+            string requestJson = JsonConvert.SerializeObject(sentimentRequest);
+
+            byte[] requestBytes = Encoding.UTF8.GetBytes(requestJson);
+            byte[] response = webClient.UploadData("https://westcentralus.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment", requestBytes);
+            string sentiments = Encoding.UTF8.GetString(response);
+            sentimentResponse = JsonConvert.DeserializeObject<SentimentResponse>(sentiments);
+
+            return sentimentResponse;
+        }
+
     }
 }
